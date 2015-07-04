@@ -18,7 +18,9 @@
 (task-options!
   pom {:project 'degree9/boot-d9micromgmt
        :version +version+
-       :description "Boot task for converting YAML to JSON."})
+       :description "Boot task for converting YAML to JSON."
+       :url         "https://github.com/d9micromgmt/boot-d9micromgmt"
+       :scm         {:url "https://github.com/d9micromgmt/boot-d9micromgmt"}})
 
 (swap! boot.repl/*default-dependencies*
        concat '[[lein-light-nrepl "0.1.0"]

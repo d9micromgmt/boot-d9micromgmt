@@ -17,20 +17,20 @@
 (defn- convert-file-type
   "Convert files between types."
   [parser generator ext]
-   (boot/with-pre-wrap fileset
+  (boot/with-pre-wrap fileset
     (let [tmp      (boot/tmp-dir!)]
-            (util/info "Converting files...\n")
-            (doseq [f (->> fileset
-                       boot/input-files)]
-              (let [in-file  (tmpd/file f)
-                    in-path  (tmpd/path f)
-                    out-path (change-file-ext in-path ext)
-                    out-file (io/file tmp out-path)
-                    result   (generator (parser (slurp in-file)))]
-                (doto out-file
-                  io/make-parents
-                  (spit result))))
-            (-> fileset (boot/add-resource tmp) boot/commit!))))
+      (util/info "Converting files...\n")
+      (doseq [f (->> fileset
+                     boot/input-files)]
+        (let [in-file  (tmpd/file f)
+              in-path  (tmpd/path f)
+              out-path (change-file-ext in-path ext)
+              out-file (io/file tmp out-path)
+              result   (generator (parser (slurp in-file)))]
+          (doto out-file
+            io/make-parents
+            (spit result))))
+      (-> fileset (boot/add-resource tmp) boot/commit!))))
 
 (defn- yaml-desttype
   "Convert YAML to another type."
@@ -43,18 +43,21 @@
   []
   (yaml-desttype boot/json-generate "json"))
 
+(defn- yaml-psdsc
+  "Convert YAML to PowerShell Desired State Configuration."
+  []
+  (yaml-desttype '(stencil/render-file "psdsc") "ps1"))
+
 (boot/deftask yaml-to-ARM
   "Convert YAML file to Azure Resource Manager JSON file."
   []
   (let [regex #{ #"(?i)(/.*)*AzureResourceManager/.*\.yaml$" }]
-    (comp (tasks/sift :include regex)
-          (yaml-json)
-          (tasks/sift :to-source regex))))
+    (comp (tasks/sift :to-source regex :include regex)
+          (yaml-json))))
 
 (boot/deftask yaml-to-psdsc
   "Convert YAML file to PowerShell Desired State Configuration."
   []
   (let [regex #{ #"(?i)(/.*)*PSDesiredStateConfiguration/.*\.yaml$" }]
-    (comp (tasks/sift :include regex)
-          (yaml-json)
-          (tasks/sift :to-source regex))))
+    (comp (tasks/sift :to-source regex :include regex)
+          (yaml-psdsc))))

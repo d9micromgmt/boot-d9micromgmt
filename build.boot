@@ -13,7 +13,7 @@
 (require '[degree9.boot-d9micromgmt :refer :all])
 (require '[adzerk.bootlaces         :refer :all])
 
-(def +version+ "0.1.0")
+(def +version+ "0.1.1")
 
 (bootlaces! +version+)
 

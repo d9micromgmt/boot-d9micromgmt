@@ -19,7 +19,6 @@
   [parser generator ext]
   (boot/with-pre-wrap fileset
     (let [tmp      (boot/tmp-dir!)]
-      (util/info "Converting files...\n")
       (doseq [f (->> fileset
                      boot/input-files)]
         (let [in-file  (tmpd/file f)
@@ -27,6 +26,7 @@
               out-path (change-file-ext in-path ext)
               out-file (io/file tmp out-path)
               result   (generator (parser (slurp in-file)))]
+          (util/info "Converting files...\n")
           (doto out-file
             io/make-parents
             (spit result))))

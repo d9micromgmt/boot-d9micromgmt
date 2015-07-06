@@ -52,7 +52,7 @@
           (tasks/sift :to-source regex))))
 
 (boot/deftask yaml-to-psdsc
-  "Convert YAML file to PowerShell DesiredState Configuration."
+  "Convert YAML file to PowerShell Desired State Configuration."
   []
   (let [regex #{ #"(?i)(/.*)*PSDesiredStateConfiguration/.*\.yaml$" }]
     (comp (tasks/sift :include regex)

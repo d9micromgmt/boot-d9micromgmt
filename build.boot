@@ -6,7 +6,9 @@
                   [org.clojure/clojurescript "0.0-3308"]
                   [boot/core                 "2.1.2"]
                   [cheshire                  "5.5.0"]
-                  [adzerk/bootlaces          "0.1.11"]])
+                  [adzerk/bootlaces          "0.1.11"]
+                  [stencil                   "0.4.0"]
+                  [circleci/clj-yaml         "0.5.3"]])
 
 (require '[degree9.boot-d9micromgmt :refer :all])
 (require '[adzerk.bootlaces         :refer :all])

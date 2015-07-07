@@ -25,7 +25,7 @@
               in-path  (tmpd/path f)
               out-path (change-file-ext in-path ext)
               out-file (io/file tmp out-path)
-              result   (generator (parser (slurp in-file)))]
+              result   (->> (parser (slurp in-file)) generator)]
           (util/info "Converting files...\n")
           (doto out-file
             io/make-parents

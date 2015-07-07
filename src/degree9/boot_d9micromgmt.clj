@@ -9,8 +9,7 @@
             [clojure.string     :as string]
             [clojure.java.io    :as io]
             [cheshire.core      :as cheshire]
-            [stencil.core       :as stencil]
-            [stencil.loader       :as tmpl]))
+            [stencil.core       :as stencil]))
 
 (defn- change-file-ext [path ext]
   (string/replace path #"\.[^\.]+$" (str "." ext)))
@@ -26,7 +25,7 @@
               in-path  (tmpd/path f)
               out-path (change-file-ext in-path ext)
               out-file (io/file tmp out-path)
-              result   (-> (parser (slurp in-file)) generator)]
+              result   (generator (parser (slurp in-file)))]
           (util/info "Converting files...\n")
           (doto out-file
             io/make-parents
@@ -37,7 +36,7 @@
   "Convert YAML to another type."
   [generator
    ext]
-  (convert-file-type yaml/parse-string 'generator ext))
+  (convert-file-type boot/yaml-parse generator ext))
 
 (defn- yaml-json
   "Convert YAML to JSON."
@@ -47,7 +46,7 @@
 (defn- yaml-psdsc
   "Convert YAML to PowerShell Desired State Configuration."
   []
-  (yaml-desttype '(stencil/render-string "Test {{ configuration }}") "ps1"))
+  (yaml-desttype '(stencil/render-file "psdsc") "ps1"))
 
 (boot/deftask yaml-to-ARM
   "Convert YAML file to Azure Resource Manager JSON file."
@@ -62,4 +61,3 @@
   (let [regex #{ #"(?i)(/.*)*PSDesiredStateConfiguration/.*\.yaml$" }]
     (comp (tasks/sift :to-source regex :include regex)
           (yaml-psdsc))))
-

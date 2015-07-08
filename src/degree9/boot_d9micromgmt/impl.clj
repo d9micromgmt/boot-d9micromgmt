@@ -12,10 +12,10 @@
             [stencil.core       :as stencil]
             [stencil.loader     :as tmplldr]))
 
-(defn- change-file-ext [path ext]
+(defn change-file-ext [path ext]
   (string/replace path #"\.[^\.]+$" (str "." ext)))
 
-(defn- psdsc-generate
+(defn psdsc-generate
   ""
   [x]
   (stencil/render-file "psdsc.mustache" x))

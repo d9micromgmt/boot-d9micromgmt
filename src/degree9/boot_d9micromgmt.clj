@@ -1,18 +1,10 @@
 (ns degree9.boot-d9micromgmt
   {:boot/export-tasks true}
   (:require [boot.core          :as boot]
-            [boot.pod           :as pod]
-            [boot.tmpdir        :as tmpd]
-            [boot.util          :as util]
             [boot.task.built-in :as tasks]
-            [clj-yaml.core      :as yaml]
-            [clojure.string     :as string]
-            [clojure.java.io    :as io]
-            [cheshire.core      :as cheshire]
-            [stencil.core       :as stencil]
             [degree9.boot-d9micromgmt.impl :as impl]))
 
-(boot/deftask yaml-to-ARM
+(boot/deftask yaml-to-arm
   "Convert YAML file to Azure Resource Manager JSON file."
   []
   (let [regex #{ #"(?i)(/.*)*AzureResourceManager/.*\.yaml$" }]

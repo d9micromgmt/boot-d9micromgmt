@@ -12,3 +12,9 @@ pom.xml.asc
 .nrepl-port
 
 .nrepl-history
+
+src/AzureResourceManager/test.yaml
+
+src/PSDesiredStateConfiguration/test.yaml
+
+src/templates/psdsc.mustache

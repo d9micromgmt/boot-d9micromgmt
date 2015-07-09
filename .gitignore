@@ -18,3 +18,5 @@ src/AzureResourceManager/test.yaml
 src/PSDesiredStateConfiguration/test.yaml
 
 src/templates/psdsc.mustache
+
+src/PSDesiredStateConfiguration/psdsc.mustache

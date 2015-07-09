@@ -48,7 +48,7 @@
 (defn yaml-json
   "Convert YAML to JSON."
   []
-  (srctype-to-desttype (yaml/parse-string :Keywords true) (boot/json-generate) "json"))
+  (srctype-to-desttype (yaml/parse-string :Keywords true) (boot/json-generate {:pretty true}) "json"))
 
 (defn yaml-psdsc
   "Convert YAML to PowerShell Desired State Configuration."
